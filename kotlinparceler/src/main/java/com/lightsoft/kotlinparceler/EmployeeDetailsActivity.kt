@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_employee_details.*
+import org.parceler.Parcels
 
 class EmployeeDetailsActivity : android.app.Activity() {
 
@@ -13,7 +14,7 @@ class EmployeeDetailsActivity : android.app.Activity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_employee_details)
-        employee = savedInstanceState?.getParcelable(ARG_EMPLOYEE) ?: Employee("John", "Doe")
+        employee = Parcels.unwrap(savedInstanceState?.getParcelable(ARG_EMPLOYEE)) ?: Employee("John", "Doe")
         initializeViews()
     }
 
@@ -25,20 +26,20 @@ class EmployeeDetailsActivity : android.app.Activity() {
 
     override fun onSaveInstanceState(outState: android.os.Bundle?) {
         val bundle = outState ?: Bundle()
-        bundle.putParcelable(ARG_EMPLOYEE, employee)
+        bundle.putParcelable(ARG_EMPLOYEE, Parcels.wrap(employee))
         super.onSaveInstanceState(bundle)
     }
 
     fun onEditClicked(view: View) {
         val intent = Intent(this, EditEmployeeActivity::class.java)
-        intent.putExtra(ARG_EMPLOYEE, employee)
+        intent.putExtra(ARG_EMPLOYEE, Parcels.wrap(employee))
         startActivityForResult(intent, EDIT_REQ_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == EDIT_REQ_CODE && resultCode == RESULT_OK) {
-            employee = data?.getParcelableExtra(ARG_EMPLOYEE)
+            employee = Parcels.unwrap(data?.getParcelableExtra(ARG_EMPLOYEE))
             initializeViews()
         }
     }

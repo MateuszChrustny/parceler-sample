@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 public class EmployeeDetailsActivity extends Activity {
 
     public static final String ARG_EMPLOYEE = "employee";
@@ -24,7 +26,7 @@ public class EmployeeDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_details);
         if (savedInstanceState != null && savedInstanceState.containsKey(ARG_EMPLOYEE))
-            employee = savedInstanceState.getParcelable(ARG_EMPLOYEE);
+            employee = Parcels.unwrap(savedInstanceState.getParcelable(ARG_EMPLOYEE));
         else
             employee = new Employee("John", "Doe");
 
@@ -42,13 +44,13 @@ public class EmployeeDetailsActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         Bundle bundle = outState != null ? outState : new Bundle();
-        bundle.putParcelable(ARG_EMPLOYEE, employee);
+        bundle.putParcelable(ARG_EMPLOYEE, Parcels.wrap(employee));
         super.onSaveInstanceState(bundle);
     }
 
     public void onEditClicked(View view) {
         Intent intent = new Intent(this, EditEmployeeActivity.class);
-        intent.putExtra(ARG_EMPLOYEE, employee);
+        intent.putExtra(ARG_EMPLOYEE, Parcels.wrap(employee));
         startActivityForResult(intent, EDIT_REQ_CODE);
     }
 
@@ -56,7 +58,7 @@ public class EmployeeDetailsActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EDIT_REQ_CODE && resultCode == RESULT_OK && data != null) {
-            employee = data.getParcelableExtra(ARG_EMPLOYEE);
+            employee = Parcels.unwrap(data.getParcelableExtra(ARG_EMPLOYEE));
             initializeViews();
         }
     }

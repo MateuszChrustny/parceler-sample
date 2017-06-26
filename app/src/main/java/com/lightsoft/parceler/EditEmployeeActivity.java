@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 
+import org.parceler.Parcels;
+
 import static com.lightsoft.parceler.EmployeeDetailsActivity.ARG_EMPLOYEE;
 
 public class EditEmployeeActivity extends Activity {
@@ -26,7 +28,7 @@ public class EditEmployeeActivity extends Activity {
         editLastName = findViewById(R.id.editLastName);
 
         if (getIntent() != null && getIntent().hasExtra(ARG_EMPLOYEE)) {
-            employee = getIntent().getParcelableExtra(ARG_EMPLOYEE);
+            employee = Parcels.unwrap(getIntent().getParcelableExtra(ARG_EMPLOYEE));
         }
 
         initializeViews();
@@ -42,7 +44,7 @@ public class EditEmployeeActivity extends Activity {
         employee.setLastName(editLastName.getText().toString());
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(ARG_EMPLOYEE, employee);
+        resultIntent.putExtra(ARG_EMPLOYEE, Parcels.wrap(employee));
 
         setResult(RESULT_OK, resultIntent);
         finish();

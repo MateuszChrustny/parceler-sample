@@ -1,12 +1,14 @@
 package com.lightsoft.parceler;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
 
-public class Employee implements Parcelable {
+@Parcel(Parcel.Serialization.BEAN)
+public class Employee {
     private String name;
     private String lastName;
 
+    @ParcelConstructor
     public Employee(String name, String lastName) {
         this.name = name;
         this.lastName = lastName;
@@ -28,31 +30,4 @@ public class Employee implements Parcelable {
         this.lastName = lastName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.lastName);
-    }
-
-    protected Employee(Parcel in) {
-        this.name = in.readString();
-        this.lastName = in.readString();
-    }
-
-    public static final Parcelable.Creator<Employee> CREATOR = new Parcelable.Creator<Employee>() {
-        @Override
-        public Employee createFromParcel(Parcel source) {
-            return new Employee(source);
-        }
-
-        @Override
-        public Employee[] newArray(int size) {
-            return new Employee[size];
-        }
-    };
 }
