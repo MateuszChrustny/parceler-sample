@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 
+import com.lightsoft.parceler.model.Employee;
+
 import org.parceler.Parcels;
 
 import static com.lightsoft.parceler.EmployeeDetailsActivity.ARG_EMPLOYEE;

@@ -3,6 +3,7 @@ package com.lightsoft.kotlinparceler
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.lightsoft.kotlinparceler.model.Employee
 import kotlinx.android.synthetic.main.activity_employee_details.*
 import org.parceler.Parcels
 
@@ -14,7 +15,7 @@ class EmployeeDetailsActivity : android.app.Activity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_employee_details)
-        employee = Parcels.unwrap(savedInstanceState?.getParcelable(ARG_EMPLOYEE)) ?: Employee("John", "Doe")
+        employee = Parcels.unwrap(savedInstanceState?.getParcelable(ARG_EMPLOYEE)) ?: Employee("John", "Doe", null)
         initializeViews()
     }
 
@@ -30,7 +31,7 @@ class EmployeeDetailsActivity : android.app.Activity() {
         super.onSaveInstanceState(bundle)
     }
 
-    fun onEditClicked(view: View) {
+    fun onEditClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         val intent = Intent(this, EditEmployeeActivity::class.java)
         intent.putExtra(ARG_EMPLOYEE, Parcels.wrap(employee))
         startActivityForResult(intent, EDIT_REQ_CODE)

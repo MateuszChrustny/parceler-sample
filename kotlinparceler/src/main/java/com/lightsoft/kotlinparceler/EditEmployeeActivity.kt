@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.lightsoft.kotlinparceler.model.Employee
 import kotlinx.android.synthetic.main.activity_edit_employee.*
 import org.parceler.Parcels
 
@@ -23,7 +24,7 @@ class EditEmployeeActivity : Activity() {
         editLastName.setText(employee?.lastName)
     }
 
-    fun onSaveClicked(view: View) {
+    fun onSaveClicked(@Suppress("UNUSED_PARAMETER") view: View) {
 
         employee?.name = editName.text.toString()
         employee?.lastName = editLastName.text.toString()

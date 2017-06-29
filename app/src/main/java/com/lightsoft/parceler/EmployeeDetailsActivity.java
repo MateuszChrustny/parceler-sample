@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lightsoft.parceler.model.Employee;
+
 import org.parceler.Parcels;
 
 public class EmployeeDetailsActivity extends Activity {
@@ -28,7 +30,7 @@ public class EmployeeDetailsActivity extends Activity {
         if (savedInstanceState != null && savedInstanceState.containsKey(ARG_EMPLOYEE))
             employee = Parcels.unwrap(savedInstanceState.getParcelable(ARG_EMPLOYEE));
         else
-            employee = new Employee("John", "Doe");
+            employee = new Employee("John", "Doe", null);
 
         textName = findViewById(R.id.textName);
         textLastName = findViewById(R.id.textLastName);
